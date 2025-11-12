@@ -3,13 +3,16 @@ package yechan.inflearn_spring_mvc_2_5.api;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import yechan.inflearn_spring_mvc_2_5.exception.UserException;
 
 @Slf4j
 @RestController
-@RequestMapping("/api2")
-public class ApiExceptionV2Controller {
+@RequestMapping("/api3")
+public class ApiExceptionV3Controller {
 
     @GetMapping("/members/{id}")
     public MemberDto getMember(@PathVariable("id") String id) {
