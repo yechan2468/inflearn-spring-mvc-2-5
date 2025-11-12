@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import yechan.inflearn_spring_mvc_2_5.exception.UserException;
 
 @Slf4j
 @RestController
@@ -20,6 +21,9 @@ public class ApiExceptionController {
         }
         if (id.equals("bad")) {
             throw new IllegalArgumentException("잘못된 입력");
+        }
+        if (id.equals("user-ex")) {
+            throw new UserException("사용자 오류");
         }
 
         return new MemberDto(id, "hello " + id);

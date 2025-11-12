@@ -1,0 +1,51 @@
+package yechan.inflearn_spring_mvc_2_5.resolver;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
+import yechan.inflearn_spring_mvc_2_5.exception.UserException;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
+public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        if (ex instanceof UserException) {
+            String acceptHeader = request.getHeader("Accept");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            if (acceptHeader.equals("application/json")) {
+                Map<String, Object> errorResult = new HashMap<>();
+                errorResult.put("ex", ex.getClass());
+                errorResult.put("message", ex.getMessage());
+
+                String json = "";
+                try {
+                    json = objectMapper.writeValueAsString(errorResult);
+                } catch (JsonProcessingException e) {}
+
+                response.setContentType("application/json");
+                response.setCharacterEncoding("utf-8");
+                try {
+                    response.getWriter().write(json);
+                } catch (IOException e) {}
+
+                return new ModelAndView();
+            } else {
+                return new ModelAndView("error-500");
+            }
+        }
+
+        return null;
+    }
+}

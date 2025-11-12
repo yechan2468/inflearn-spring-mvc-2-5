@@ -10,6 +10,7 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import yechan.inflearn_spring_mvc_2_5.interceptor.LogInterceptor;
 import yechan.inflearn_spring_mvc_2_5.resolver.MyHandlerExceptionResolver;
+import yechan.inflearn_spring_mvc_2_5.resolver.UserHandlerExceptionResolver;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
         resolvers.add(new MyHandlerExceptionResolver());
+        resolvers.add(new UserHandlerExceptionResolver());
     }
 
     //    @Bean
