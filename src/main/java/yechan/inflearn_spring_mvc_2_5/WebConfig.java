@@ -3,7 +3,6 @@ package yechan.inflearn_spring_mvc_2_5;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import yechan.inflearn_spring_mvc_2_5.filter.LogFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import jakarta.servlet.DispatcherType;
@@ -18,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error", "/error-page/**");
+                .excludePathPatterns("/css/**", "/*.ico", "/templates/error/error", "/error-page/**");
     }
 
 //    @Bean
