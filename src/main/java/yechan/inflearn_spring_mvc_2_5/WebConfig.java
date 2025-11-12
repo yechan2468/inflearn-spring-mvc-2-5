@@ -1,5 +1,6 @@
 package yechan.inflearn_spring_mvc_2_5;
 
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import yechan.inflearn_spring_mvc_2_5.filter.LogFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -8,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import yechan.inflearn_spring_mvc_2_5.interceptor.LogInterceptor;
+import yechan.inflearn_spring_mvc_2_5.resolver.MyHandlerExceptionResolver;
+
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -20,7 +24,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/css/**", "/*.ico", "/templates/error/error", "/error-page/**");
     }
 
-//    @Bean
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new MyHandlerExceptionResolver());
+    }
+
+    //    @Bean
     public FilterRegistrationBean<Filter> logFilter() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 
